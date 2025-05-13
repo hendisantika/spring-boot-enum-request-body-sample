@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -118,5 +119,35 @@ class DemoControllerTest {
         Assertions.assertThat(result.getBody().getId()).isEqualTo(jsonObject.get("id"));
         Assertions.assertThat(result.getBody().getDemo4Enum().get(0).name()).isEqualTo(DemoEnum4.GOOD_GID.name());
         Assertions.assertThat(result.getBody().getDemo4Enum().get(1).name()).isEqualTo(DemoEnum4.HELLO_WORLD.name());
+    }
+
+    /**
+     * === FAIL Test code ===
+     */
+    @Test
+    public void FAIL_Call_POST_Controller_with_JSONObject_1() throws Exception {
+        /**
+         * ## Information
+         * API : /api/enum/2
+         *
+         * Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error:
+         * Cannot construct instance of `dev.be.requestbody_enum_type.enums.DemoEnum2`,
+         * problem: No enum constant dev.be.requestbody_enum_type.enums.DemoEnum2.goodGid2; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException:
+         * at [Source: (PushbackInputStream); line: 1, column: 22] (through reference chain: dev.be.requestbody_enum_type.dto.request.Demo2Request["demoEnum"])]
+         *
+         * ## Comment
+         * In the DemoEnum2.from() method, 'Cannot construct' occurs because the Enum corresponding to the input "s" value cannot be found.
+         */
+
+        JSONObject personJsonObject = new JSONObject();
+        personJsonObject.put("id", "1");
+        personJsonObject.put("demoEnum", "goodGid2");
+
+        HttpEntity<String> request = new HttpEntity<>(personJsonObject.toString(), getHttpHeaders());
+
+        ResponseEntity<DemoResponse> result = testRestTemplate.postForEntity("/api/enum/2",
+                request,
+                DemoResponse.class);
+        Assertions.assertThat(result.getStatusCode()).isNotEqualTo(HttpStatus.OK);
     }
 }
