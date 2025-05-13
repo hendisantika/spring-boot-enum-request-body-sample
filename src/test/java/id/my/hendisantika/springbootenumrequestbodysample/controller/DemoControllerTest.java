@@ -150,4 +150,31 @@ class DemoControllerTest {
                 DemoResponse.class);
         Assertions.assertThat(result.getStatusCode()).isNotEqualTo(HttpStatus.OK);
     }
+
+    @Test
+    public void FAIL_Call_POST_Controller_with_JSONObject_2() throws Exception {
+        /**
+         * ## Information
+         * API : /api/enum/3
+         *
+         * Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error:
+         * Cannot deserialize value of type `dev.be.requestbody_enum_type.enums.DemoEnum3` from String "goodGid2":
+         * not one of the values accepted for Enum class: [GOOD_GID, HELLO_WORLD]; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException:
+         * at [Source: (PushbackInputStream); line: 1, column: 22] (through reference chain: dev.be.requestbody_enum_type.dto.request.Demo3Request["demoEnum"])]
+         *
+         * ## Comment
+         * Unlike DemoEnum2, there is no @JsonCreator, so a 'Cannot deserialize' error occurs instead of a 'Cannot construct' error.
+         */
+
+        JSONObject personJsonObject = new JSONObject();
+        personJsonObject.put("id", "1");
+        personJsonObject.put("demoEnum", "goodGid2");
+
+        HttpEntity<String> request = new HttpEntity<>(personJsonObject.toString(), getHttpHeaders());
+
+        ResponseEntity<DemoResponse> result = testRestTemplate.postForEntity("/api/enum/3",
+                request,
+                DemoResponse.class);
+        Assertions.assertThat(result.getStatusCode()).isNotEqualTo(HttpStatus.OK);
+    }
 }
