@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo1Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.response.DemoResponse;
 import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum1;
+import net.minidev.json.JSONObject;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,4 +54,19 @@ class DemoControllerTest {
         Assertions.assertThat(result.getBody().getDemo1Enum()).isEqualTo(DemoEnum1.GOOD_GID);
     }
 
+    @Test
+    public void SUCCESS_Call_POST_Controller_with_JSONObject() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "1");
+        jsonObject.put("demoEnum", "goodGid");
+
+        HttpEntity<String> request = new HttpEntity<>(jsonObject.toString(), getHttpHeaders());
+
+        ResponseEntity<DemoResponse> result = testRestTemplate.postForEntity("/api/enum/1",
+                request,
+                DemoResponse.class);
+
+        Assertions.assertThat(result.getBody().getId()).isEqualTo(jsonObject.get("id"));
+        Assertions.assertThat(result.getBody().getDemo1Enum()).isEqualTo(DemoEnum1.GOOD_GID);
+    }
 }
