@@ -2,6 +2,7 @@ package id.my.hendisantika.springbootenumrequestbodysample.controller;
 
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo1Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo2Request;
+import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo3Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.response.DemoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,15 @@ public class DemoController {
         return DemoResponse.builder()
                 .id(demoRequest.getId())
                 .demo2Enum(demoRequest.getDemoEnum())
+                .build();
+    }
+
+    @PostMapping("/api/enum/3")
+    public DemoResponse demo3(@RequestBody Demo3Request demoRequest) {
+        System.out.println();
+        return DemoResponse.builder()
+                .id(demoRequest.getId())
+                .demo3Enum(demoRequest.getDemoEnum())
                 .build();
     }
 }
