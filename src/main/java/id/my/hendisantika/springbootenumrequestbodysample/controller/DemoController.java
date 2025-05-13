@@ -3,6 +3,7 @@ package id.my.hendisantika.springbootenumrequestbodysample.controller;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo1Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo2Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo3Request;
+import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo4Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.response.DemoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,15 @@ public class DemoController {
         return DemoResponse.builder()
                 .id(demoRequest.getId())
                 .demo3Enum(demoRequest.getDemoEnum())
+                .build();
+    }
+
+    @PostMapping("/api/enum/4")
+    public DemoResponse demo4(@RequestBody Demo4Request demoRequest) { // Requests are received in the format of List<DemoEnum4>.
+        System.out.println();
+        return DemoResponse.builder()
+                .id(demoRequest.getId())
+                .demo4Enum(demoRequest.getDemoEnum()) // Call the constructor again (= DemoEnum1.from() is called)
                 .build();
     }
 }
