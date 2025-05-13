@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.request.Demo1Request;
 import id.my.hendisantika.springbootenumrequestbodysample.dto.response.DemoResponse;
 import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum1;
+import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum4;
 import net.minidev.json.JSONObject;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,10 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -68,5 +73,50 @@ class DemoControllerTest {
 
         Assertions.assertThat(result.getBody().getId()).isEqualTo(jsonObject.get("id"));
         Assertions.assertThat(result.getBody().getDemo1Enum()).isEqualTo(DemoEnum1.GOOD_GID);
+    }
+
+    @Test
+    public void SUCCESS_Call_POST_Controller_with_JSONObject_List_Enum() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", "1");
+        jsonObject.put("demoEnum", new ArrayList<String>() {{
+            add("goodGid");
+            add("helloWorld");
+        }});
+        try {
+            objectMapper.writeValueAsString(jsonObject);
+        } catch (Exception e) {
+            /*
+           Parsing a JSONObject containing a List with ObjectMapper results in an error.
+
+            com.fasterxml.jackson.databind.exc.InvalidDefinitionException:
+            No serializer found for class org.json.JSONObject and no properties discovered to create BeanSerializer
+            (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS)
+             */
+            System.out.println(e);
+        }
+        /**
+         * Our goal is to pass a JSON-structured String to Jackson.
+         * Therefore, as a way to create a JSON-structured String,
+         * we can safely use Map and ObjectMapper.
+         */
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", "1");
+        map.put("demoEnum", new ArrayList<String>() {{
+            add("goodGid");
+            add("helloWorld");
+        }});
+
+        String asString = objectMapper.writeValueAsString(map);
+
+        HttpEntity<String> request = new HttpEntity<>(asString, getHttpHeaders());
+
+        ResponseEntity<DemoResponse> result = testRestTemplate.postForEntity("/api/enum/4",
+                request,
+                DemoResponse.class);
+
+        Assertions.assertThat(result.getBody().getId()).isEqualTo(jsonObject.get("id"));
+        Assertions.assertThat(result.getBody().getDemo4Enum().get(0).name()).isEqualTo(DemoEnum4.GOOD_GID.name());
+        Assertions.assertThat(result.getBody().getDemo4Enum().get(1).name()).isEqualTo(DemoEnum4.HELLO_WORLD.name());
     }
 }
