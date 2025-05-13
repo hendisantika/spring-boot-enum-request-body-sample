@@ -1,6 +1,6 @@
 package id.my.hendisantika.springbootenumrequestbodysample.dto.request;
 
-import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum1;
+import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum2;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Demo1Request {
+public class Demo2Request {
     private String id;
-    private DemoEnum1 demoEnum;
+    private DemoEnum2 demoEnum;
 }
