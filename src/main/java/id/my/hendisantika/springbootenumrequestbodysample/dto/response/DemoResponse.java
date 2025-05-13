@@ -1,4 +1,4 @@
-package id.my.hendisantika.springbootenumrequestbodysample.dto;
+package id.my.hendisantika.springbootenumrequestbodysample.dto.response;
 
 import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum1;
 import id.my.hendisantika.springbootenumrequestbodysample.enums.DemoEnum2;
