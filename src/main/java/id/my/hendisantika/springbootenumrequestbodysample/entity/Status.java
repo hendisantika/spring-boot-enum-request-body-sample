@@ -12,5 +12,15 @@ package id.my.hendisantika.springbootenumrequestbodysample.entity;
  * To change this template use File | Settings | File Templates.
  */
 public enum Status {
-    ACTIVATED, DEACTIVATED, SUSPENDED
+    ACTIVATED(1), DEACTIVATED(2), SUSPENDED(3);
+
+    int statusId;
+
+    Status(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
 }
