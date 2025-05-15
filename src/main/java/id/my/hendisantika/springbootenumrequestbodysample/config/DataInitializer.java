@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.stream.IntStream;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : enum-request-body-sample
@@ -21,5 +23,9 @@ import org.springframework.context.annotation.Configuration;
 public class DataInitializer implements CommandLineRunner {
     private CustomerRepository customerRepository;
 
-
+    @Override
+    public void run(String... args) {
+        IntStream.rangeClosed(1, 9)
+                .forEach(this::createRandomCustomer);
+    }
 }
