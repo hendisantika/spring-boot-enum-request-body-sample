@@ -1,5 +1,7 @@
 package id.my.hendisantika.springbootenumrequestbodysample.entity;
 
+import id.my.hendisantika.springbootenumrequestbodysample.util.CustomerStatusConverter;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,5 +38,6 @@ public class Customer {
     private String dateOfBirth;
 
     @Enumerated(EnumType.STRING)
+    @Convert(converter = CustomerStatusConverter.class)
     private Status status;
 }
