@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : enum-request-body-sample
@@ -35,7 +37,7 @@ public class Customer {
     private Long id;
     private String name;
     private String email;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     @Convert(converter = CustomerStatusConverter.class)
