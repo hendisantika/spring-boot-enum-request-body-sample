@@ -24,17 +24,16 @@ import java.util.stream.IntStream;
 @Configuration
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) {
-        IntStream.rangeClosed(1, 9)
+        IntStream.rangeClosed(1, 10)
                 .forEach(this::createRandomCustomer);
     }
 
     public void createRandomCustomer(int id) {
         Customer customer = new Customer();
-        customer.setId((long) id);
         customer.setName("name " + id + " surname " + id);
         customer.setEmail("organisation" + id + "@email.com");
         customer.setDateOfBirth(LocalDate.of(1980 + 2 * id, id % 12, (3 * id) % 28));
