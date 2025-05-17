@@ -71,4 +71,6 @@ Enum conversion is possible with the logic I defined during deserialization.
 it is mapped to GOOD_GID and returned through the logic defined in from().
 
 References:
-https://dev.to/noelopez/spring-rest-working-with-enums-ma
+
+1. https://dev.to/noelopez/spring-rest-working-with-enums-ma
+2. https://www.baeldung.com/spring-boot-enum-mapping
